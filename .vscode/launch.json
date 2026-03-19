@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:timer}",
+      "name": "Debug Reminder",
+      "target": "Reminder",
+      "configuration": "debug",
+      "preLaunchTask": "swift: Build Debug Reminder"
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:timer}",
+      "name": "Release Reminder",
+      "target": "Reminder",
+      "configuration": "release",
+      "preLaunchTask": "swift: Build Release Reminder"
+    }
+  ]
+}

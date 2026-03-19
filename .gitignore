@@ -1,0 +1,10 @@
+.build/
+*.app/
+*.o
+*.d
+*.swp
+.DS_Store
+.claude/
+.swiftpm/
+*.xcuserstate
+xcuserdata/
