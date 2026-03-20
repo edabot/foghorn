@@ -165,6 +165,20 @@ struct ContentView: View {
                             .font(.system(size: 13, weight: .medium))
                     }
                     .toggleStyle(.checkbox)
+
+                    Button("Test") {
+                        let fake = Reminder(
+                            name: "Test",
+                            hour: 0, minute: 0,
+                            fireDate: Date(),
+                            timing: .atTime,
+                            fuego: fuego
+                        )
+                        showAlertWindow(for: fake, use24hr: use24hr) {}
+                    }
+                    .buttonStyle(.plain)
+                    .font(.system(size: 12))
+                    .foregroundColor(.secondary)
                 }
 
                 if !errorMsg.isEmpty {

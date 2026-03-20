@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("use24hr") private var use24hr = false
     @AppStorage("fuegoWordCount") private var fuegoWordCount = 3
+    @AppStorage("alertCountdown") private var alertCountdown = 5
 
     var body: some View {
         Form {
@@ -19,6 +20,8 @@ struct SettingsView: View {
             }
             .pickerStyle(.menu)
             .frame(maxWidth: 160)
+
+            Stepper("Dismiss countdown: \(alertCountdown)s", value: $alertCountdown, in: 0...60)
         }
         .padding(24)
         .frame(width: 320)
