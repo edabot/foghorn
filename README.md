@@ -40,6 +40,12 @@ When a reminder fires, the full-screen alert appears on the primary display on t
 
 Use the **Test** button to trigger the alert immediately using the current form values.
 
+## Screenshots
+
+<img width="473" height="540" alt="Screenshot 2026-03-23 at 1 14 38 PM" src="https://github.com/user-attachments/assets/805038f8-4bcb-4fed-99dc-a6e60691f5d5" />
+<img width="1128" height="766" alt="Screenshot 2026-03-23 at 1 13 47 PM" src="https://github.com/user-attachments/assets/66ca7dc6-92b0-4e0a-8e2f-7c1b8fa5c163" />
+
+
 ### Settings
 
 Open **Reminder > Settings** (or press `⌘,`) to configure:
