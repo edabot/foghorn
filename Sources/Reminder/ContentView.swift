@@ -167,10 +167,26 @@ struct ContentView: View {
                     .toggleStyle(.checkbox)
 
                     Button("Test") {
+                        let now = Date()
+                        let nowComps = Calendar.current.dateComponents([.hour, .minute], from: now)
+                        let parts = timeStr.split(separator: ":")
+                        let scheduledHour: Int?
+                        let scheduledMinute: Int?
+                        if parts.count == 2, let h = Int(parts[0]), let m = Int(parts[1]) {
+                            scheduledHour = use24hr ? h : (ampm == "PM" ? (h == 12 ? 12 : h + 12) : (h == 12 ? 0 : h))
+                            scheduledMinute = m
+                        } else if parts.count == 1, let h = Int(parts[0]) {
+                            scheduledHour = use24hr ? h : (ampm == "PM" ? (h == 12 ? 12 : h + 12) : (h == 12 ? 0 : h))
+                            scheduledMinute = 0
+                        } else {
+                            scheduledHour = nil
+                            scheduledMinute = nil
+                        }
                         let fake = Reminder(
-                            name: "Test",
-                            hour: 0, minute: 0,
-                            fireDate: Date(),
+                            name: name.trimmingCharacters(in: .whitespaces).isEmpty ? "Test" : name.trimmingCharacters(in: .whitespaces),
+                            hour: scheduledHour ?? nowComps.hour ?? 0,
+                            minute: scheduledMinute ?? nowComps.minute ?? 0,
+                            fireDate: now,
                             timing: .atTime,
                             fuego: fuego
                         )
@@ -302,9 +318,15 @@ struct ReminderRow: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(reminder.name)
                     .font(.system(size: 14, weight: .semibold))
-                Text("\(reminder.formattedTime(use24hr: use24hr))  ·  \(reminder.timing.label)")
-                    .font(.system(size: 12))
-                    .foregroundColor(.secondary)
+                HStack(spacing: 4) {
+                    Text("\(reminder.formattedTime(use24hr: use24hr))  ·  \(reminder.timing.label)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                    if reminder.fuego {
+                        Text("🔥")
+                            .font(.system(size: 11))
+                    }
+                }
             }
             Spacer()
             if reminder.fired {

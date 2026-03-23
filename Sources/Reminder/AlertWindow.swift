@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 func showAlertWindow(for reminder: Reminder, use24hr: Bool, onDismiss: @escaping () -> Void) {
-    let screen = NSScreen.main ?? NSScreen.screens[0]
+    let screen = NSScreen.screens.first(where: { $0.frame.origin == .zero }) ?? NSScreen.screens[0]
     let window = AlertNSWindow(
         contentRect: screen.frame,
         styleMask: [.borderless],
@@ -14,7 +14,7 @@ func showAlertWindow(for reminder: Reminder, use24hr: Bool, onDismiss: @escaping
     window.level = .screenSaver
     window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
     window.isOpaque = true
-    window.backgroundColor = NSColor(red: 0.1, green: 0.1, blue: 0.18, alpha: 1)
+    window.backgroundColor = .windowBackgroundColor
 
     let hostingView = NSHostingView(rootView: AlertView(reminder: reminder, use24hr: use24hr) {
         window.closeAlert()

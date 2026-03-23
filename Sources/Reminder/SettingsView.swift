@@ -21,7 +21,13 @@ struct SettingsView: View {
             .pickerStyle(.menu)
             .frame(maxWidth: 160)
 
-            Stepper("Dismiss countdown: \(alertCountdown)s", value: $alertCountdown, in: 0...60)
+            Picker("Dismiss countdown", selection: $alertCountdown) {
+                ForEach(0...20, id: \.self) { n in
+                    Text(n == 0 ? "None" : "\(n)s").tag(n)
+                }
+            }
+            .pickerStyle(.menu)
+            .frame(maxWidth: 160)
         }
         .padding(24)
         .frame(width: 320)

@@ -33,14 +33,22 @@ struct AlertView: View {
     @State private var typed = ""
     @State private var words: [String] = []
     @FocusState private var fieldFocused: Bool
+    @Environment(\.colorScheme) private var colorScheme
 
     private var target: String { words.joined(separator: " ") }
     private var accent: Color { Color(red: 0.91, green: 0.27, blue: 0.38) }
+    private var bg: Color {
+        colorScheme == .dark
+            ? Color(red: 0.1, green: 0.1, blue: 0.18)
+            : Color(red: 0.94, green: 0.94, blue: 0.97)
+    }
+    private var primaryText: Color { colorScheme == .dark ? .white : .primary }
+    private var dimText: Color { colorScheme == .dark ? Color.white.opacity(0.5) : Color.primary.opacity(0.4) }
+    private var fieldBg: Color { colorScheme == .dark ? Color.white.opacity(0.08) : Color.black.opacity(0.06) }
 
     var body: some View {
         ZStack {
-            Color(red: 0.1, green: 0.1, blue: 0.18)
-                .ignoresSafeArea()
+            bg.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Spacer()
@@ -53,7 +61,7 @@ struct AlertView: View {
 
                     Text(reminder.name)
                         .font(.system(size: 72, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(primaryText)
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.35)
                         .lineLimit(3)
@@ -61,7 +69,7 @@ struct AlertView: View {
 
                     Text(reminder.formattedTime(use24hr: use24hr))
                         .font(.system(size: 40, weight: .light, design: .rounded))
-                        .foregroundColor(Color.white.opacity(0.5))
+                        .foregroundColor(dimText)
                 }
 
                 Spacer()
@@ -73,7 +81,7 @@ struct AlertView: View {
                         if countdown > 0 {
                             Text("\(countdown)")
                                 .font(.system(size: 48, weight: .bold, design: .rounded))
-                                .foregroundColor(Color.white.opacity(0.5))
+                                .foregroundColor(dimText)
                                 .monospacedDigit()
                                 .frame(height: 60)
                         } else {
@@ -110,16 +118,16 @@ struct AlertView: View {
         VStack(spacing: 24) {
             Text("Type these words to dismiss:")
                 .font(.system(size: 16, weight: .medium, design: .rounded))
-                .foregroundColor(Color.white.opacity(0.6))
+                .foregroundColor(dimText)
 
             HStack(spacing: 16) {
                 ForEach(words, id: \.self) { word in
                     Text(word)
                         .font(.system(size: 32, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(primaryText)
                         .padding(.horizontal, 18)
                         .padding(.vertical, 10)
-                        .background(Color.white.opacity(0.1))
+                        .background(primaryText.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
             }
@@ -127,11 +135,11 @@ struct AlertView: View {
             ZStack {
                 TextField("", text: $typed)
                     .font(.system(size: 22, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(primaryText)
                     .multilineTextAlignment(.center)
                     .textFieldStyle(.plain)
                     .frame(width: 380, height: 52)
-                    .background(Color.white.opacity(countdown > 0 ? 0.04 : 0.08))
+                    .background(fieldBg.opacity(countdown > 0 ? 0.5 : 1))
                     .clipShape(RoundedRectangle(cornerRadius: 14))
                     .overlay(
                         RoundedRectangle(cornerRadius: 14)
@@ -153,7 +161,7 @@ struct AlertView: View {
                 if countdown > 0 {
                     Text("\(countdown)")
                         .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .foregroundColor(Color.white.opacity(0.4))
+                        .foregroundColor(dimText)
                         .monospacedDigit()
                 }
             }
